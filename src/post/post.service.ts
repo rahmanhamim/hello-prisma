@@ -15,8 +15,14 @@ const insertIntoDB = async (data: Post): Promise<Post> => {
 };
 
 const getAllPosts = async (options: Record<string, any>) => {
-  const { sortBy, sortOrder, searchTerm } = options;
+  const { sortBy, sortOrder, searchTerm, page, limit } = options;
+
+  const skip = page ? (Number(page) - 1) * (limit ? Number(limit) : 10) : 0;
+  const take = limit ? Number(limit) : 10;
+
   const result = await prisma.post.findMany({
+    skip,
+    take,
     include: {
       author: true,
       category: true,
