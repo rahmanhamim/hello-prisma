@@ -27,7 +27,8 @@ const getAllPosts = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: "Posts fetched successfully",
-      data: result,
+      total: result.total,
+      data: result.data,
     });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
