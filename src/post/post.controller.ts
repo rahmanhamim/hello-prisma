@@ -35,7 +35,40 @@ const getAllPosts = async (req: Request, res: Response) => {
   }
 };
 
+const updatePost = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const data = req.body;
+
+  try {
+    const result = await PostService.updatePost(id, data);
+    res.status(200).json({
+      success: true,
+      message: "Post updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const deletePost = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+
+  try {
+    const result = await PostService.deletePost(id);
+    res.status(200).json({
+      success: true,
+      message: "Post deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const PostController = {
   insertIntoDB,
   getAllPosts,
+  updatePost,
+  deletePost,
 };
